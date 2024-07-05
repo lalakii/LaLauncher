@@ -1,0 +1,57 @@
+plugins {
+    id 'com.android.application' version '8.5.0'
+    id 'cn.lalaki.repack' version '3.0.3-LTS'
+}
+android {
+    namespace 'cn.lalaki'
+    compileSdk 35
+    buildToolsVersion = '35.0.0'
+    defaultConfig {
+        //noinspection ExpiredTargetSdkVersion
+        targetSdk 29
+        applicationId "cn.lalaki"
+        minSdk 1
+        versionCode 9
+        versionName "11"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+    signingConfigs {
+        release {
+            enableV1Signing = true
+            enableV2Signing = false
+            enableV3Signing = false
+            enableV4Signing = false
+            keyAlias = "1"
+            keyPassword = "1"
+            storePassword = "1"
+            storeFile = file("D:\\imoe-legacy.jks")
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            debuggable false
+            jniDebuggable false
+            renderscriptOptimLevel 3
+            renderscriptDebuggable false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    dependenciesInfo {
+        includeInApk false
+        includeInBundle false
+    }
+}
+repackConfig {
+    quiet = true
+    resign = true
+    addV1Sign = true
+    addV2Sign = false
+    disableV3V4 = true
+    blacklist = new String[]{"META-INF", "resources.arsc"}
+}
