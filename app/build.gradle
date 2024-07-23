@@ -48,7 +48,7 @@ android {
     }
 }
 repackConfig {
-    apkFile = new File("D:\\ApkWorker\\La桌面TV版.apk")
+    apkFile = new File("D:\\Share\\app-release.apk")
     quiet = true
     resign = true
     addV1Sign = true

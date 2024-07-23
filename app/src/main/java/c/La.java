@@ -81,7 +81,7 @@ import android.view.View;
                 int d = rect.top - padding;
                 if (k == selected) {
                     paint.setStyle(Paint.Style.STROKE);
-                    g.drawRect(v.mIcon.getBounds(), paint);
+                    g.drawRect(rect, paint);
                     paint.setColor(Color.MAGENTA);
                     launch.setClassName(v.mPackageName, v.mActivityName);
                 } else {
@@ -128,11 +128,10 @@ import android.view.View;
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            return true;
-        }
         int tmpSelected;
         switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                return true;
             case KeyEvent.KEYCODE_DPAD_LEFT:
                 if (selected > 0) {
                     selected--;
@@ -158,6 +157,7 @@ import android.view.View;
                 }
                 break;
             case KeyEvent.KEYCODE_ENTER:
+            case KeyEvent.KEYCODE_DPAD_CENTER:
                 startActivity(launch);
                 break;
         }
