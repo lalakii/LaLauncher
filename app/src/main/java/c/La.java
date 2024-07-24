@@ -14,7 +14,7 @@ import android.view.View;
  * Created on 2024-06-23
  *
  * @author lalaki
- * @since la launcher
+ * @since la launcher for tv
  */ public class La extends android.app.Activity {
     Lv[] apps;
     String sPackage;
@@ -28,20 +28,22 @@ import android.view.View;
         if (apps == null) {
             android.content.pm.PackageManager pm = getPackageManager();
             android.util.DisplayMetrics metrics = getResources().getDisplayMetrics();
-            int x = metrics.widthPixels, y = metrics.heightPixels - (int) (metrics.density * 24), i = 0, j = 0;
+            int x = metrics.widthPixels, y = metrics.heightPixels - (int) metrics.density * 25, i = 0, j = 0;
             java.util.List<ResolveInfo> ls = pm.queryIntentActivities(launch, 0);
             apps = new Lv[ls.size()];
             for (; ; ) {
-                col = x / side;
-                if (apps.length / col * side >= y) {
-                    col++;
-                    side = x / col;
-                    padding = side / col;
-                    paint.setTextSize(padding);
+                if (x * y / (side * side) < apps.length) {
                     break;
                 }
                 side++;
             }
+            col = x / side;
+            while ((apps.length / col + (apps.length % col == 0 ? 0 : 1)) * side > y) {
+                col++;
+            }
+            side = x / col;
+            padding = side / col;
+            paint.setTextSize(padding);
             for (int k = 0; k < apps.length; k++) {
                 ResolveInfo l = ls.get(k);
                 Lv v = new Lv();
@@ -74,7 +76,6 @@ import android.view.View;
             setOnLongClickListener(this);
             for (int k = 0; k < apps.length; k++) {
                 Lv v = apps[k];
-                v.mIcon.draw(g);
                 String name = v.mAppName.substring(0, paint.breakText(v.mAppName, true, side, null)), arg = v.mAppName.replace(name, "");
                 Rect rect = v.mIcon.getBounds();
                 int c = rect.left - padding;
@@ -88,6 +89,7 @@ import android.view.View;
                     paint.setColor(Color.BLACK);
                 }
                 paint.setStyle(Paint.Style.FILL);
+                v.mIcon.draw(g);
                 g.drawText(name, (side - paint.measureText(name)) / 2 + c, side + d, paint);
                 g.drawText(arg, (side - paint.measureText(arg)) / 2 + c, side + d + paint.getTextSize(), paint);
             }
@@ -130,11 +132,18 @@ import android.view.View;
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         int tmpSelected;
         switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                return true;
+            case KeyEvent.KEYCODE_ENTER:
+            case KeyEvent.KEYCODE_DPAD_CENTER:
+                startActivity(launch);
+                break;
             case KeyEvent.KEYCODE_DPAD_LEFT:
                 if (selected > 0) {
                     selected--;
+                }
+                break;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                if (selected < apps.length - 1) {
+                    selected++;
                 }
                 break;
             case KeyEvent.KEYCODE_DPAD_UP:
@@ -144,11 +153,6 @@ import android.view.View;
                     selected = tmpSelected;
                 }
                 break;
-            case KeyEvent.KEYCODE_DPAD_RIGHT:
-                if (selected < apps.length - 1) {
-                    selected++;
-                }
-                break;
             case KeyEvent.KEYCODE_DPAD_DOWN:
                 tmpSelected = selected;
                 tmpSelected += col;
@@ -156,10 +160,8 @@ import android.view.View;
                     selected = tmpSelected;
                 }
                 break;
-            case KeyEvent.KEYCODE_ENTER:
-            case KeyEvent.KEYCODE_DPAD_CENTER:
-                startActivity(launch);
-                break;
+            case KeyEvent.KEYCODE_BACK:
+                return true;
         }
         root.invalidate();
         return super.onKeyDown(keyCode, event);
