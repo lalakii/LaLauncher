@@ -2,7 +2,6 @@ package c;
 
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.KeyEvent;
@@ -17,18 +16,18 @@ import android.view.View;
  * @since la launcher for tv
  */ public class La extends android.app.Activity {
     Lv[] apps;
+    View root;
     String sPackage;
     Paint paint = new Paint();
     int padding, col, selected = -1, side = 1;
     Intent launch = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    View root;
 
     @Override
     public void onWindowFocusChanged(boolean __) {
         if (apps == null) {
             android.content.pm.PackageManager pm = getPackageManager();
             android.util.DisplayMetrics metrics = getResources().getDisplayMetrics();
-            int x = metrics.widthPixels, y = metrics.heightPixels - (int) metrics.density * 25, i = 0, j = 0;
+            int x = metrics.widthPixels, y = metrics.heightPixels - (int) metrics.density * 25, i = -1, j;
             java.util.List<ResolveInfo> ls = pm.queryIntentActivities(launch, 0);
             apps = new Lv[ls.size()];
             for (; ; ) {
@@ -45,6 +44,9 @@ import android.view.View;
             padding = side / col;
             paint.setTextSize(padding);
             for (int k = 0; k < apps.length; k++) {
+                i = (j = k % col) == 0 ? ++i : i;
+                x = j * side;
+                y = i * side;
                 ResolveInfo l = ls.get(k);
                 Lv v = new Lv();
                 apps[k] = v;
@@ -52,11 +54,7 @@ import android.view.View;
                 v.mActivityName = l.activityInfo.name;
                 v.mPackageName = l.activityInfo.packageName;
                 v.mAppName = (String) l.activityInfo.loadLabel(pm);
-                x = j * side;
-                y = i * side;
                 v.mIcon.setBounds(x + padding, y + padding, x + side - padding, y + side - padding);
-                j++;
-                i = (j %= col) == 0 ? ++i : i;
             }
             root = new Lv();
             setContentView(root);
@@ -82,11 +80,11 @@ import android.view.View;
                 int d = rect.top - padding;
                 if (k == selected) {
                     paint.setStyle(Paint.Style.STROKE);
+                    paint.setColor(-9297428);
                     g.drawRect(rect, paint);
-                    paint.setColor(Color.MAGENTA);
                     launch.setClassName(v.mPackageName, v.mActivityName);
                 } else {
-                    paint.setColor(Color.BLACK);
+                    paint.setColor(-1);
                 }
                 paint.setStyle(Paint.Style.FILL);
                 v.mIcon.draw(g);
