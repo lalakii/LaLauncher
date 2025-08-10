@@ -7,12 +7,11 @@
             <action android:name="android.intent.action.MAIN" />
         </intent>
     </queries>
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
-    <application
-        tools:ignore="MissingApplicationIcon">
+    <application tools:ignore="MissingApplicationIcon">
         <activity
             android:name="c.La"
             android:excludeFromRecents="true"
+            android:exported="true"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.Wallpaper.NoTitleBar.Fullscreen"
             tools:ignore="IntentFilterExportedReceiver,NewApi">

@@ -1,9 +1,12 @@
 package c;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ResolveInfo;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -12,34 +15,46 @@ import android.view.View;
  * Created on 2024-06-23
  *
  * @author lalaki
- * @since la launcher
+ * @since la launcher for tv
  */ public class La extends android.app.Activity {
     Lv[] apps;
+    View root;
     String sPackage;
     Paint paint = new Paint();
-    int padding, side = 1;
+    int padding, col, selected = -1, side = 1;
     Intent launch = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
     @Override
     public void onWindowFocusChanged(boolean __) {
         if (apps == null) {
+            registerReceiver(new Lr(), new IntentFilter() {{
+                addDataScheme("package");
+                addAction(Intent.ACTION_PACKAGE_ADDED);
+                addAction(Intent.ACTION_PACKAGE_REMOVED);
+            }});
             android.content.pm.PackageManager pm = getPackageManager();
             android.util.DisplayMetrics metrics = getResources().getDisplayMetrics();
-            int x = metrics.widthPixels, y = metrics.heightPixels - (int) (metrics.density * 24), i = 0, j = 0, col;
+            int x = metrics.widthPixels, y = metrics.heightPixels - (int) metrics.density * 25, i = -1, j;
             java.util.List<ResolveInfo> ls = pm.queryIntentActivities(launch, 0);
             apps = new Lv[ls.size()];
             for (; ; ) {
-                col = x / side;
-                if (apps.length / col * side >= y) {
-                    col++;
-                    side = x / col;
-                    padding = side / col;
-                    paint.setTextSize(padding);
+                if (x * y / (side * side) < apps.length) {
                     break;
                 }
                 side++;
             }
+            col = x / side;
+            while ((apps.length / col + (apps.length % col == 0 ? 0 : 1)) * side > y) {
+                col++;
+            }
+            side = x / col;
+            padding = side / col;
+            paint.setTextSize(padding);
+            paint.setStrokeWidth(4f);
             for (int k = 0; k < apps.length; k++) {
+                i = (j = k % col) == 0 ? ++i : i;
+                x = j * side;
+                y = i * side;
                 ResolveInfo l = ls.get(k);
                 Lv v = new Lv();
                 apps[k] = v;
@@ -47,13 +62,23 @@ import android.view.View;
                 v.mActivityName = l.activityInfo.name;
                 v.mPackageName = l.activityInfo.packageName;
                 v.mAppName = (String) l.activityInfo.loadLabel(pm);
-                x = j * side;
-                y = i * side;
                 v.mIcon.setBounds(x + padding, y + padding, x + side - padding, y + side - padding);
-                j++;
-                i = (j %= col) == 0 ? ++i : i;
             }
-            setContentView(new Lv());
+            root = new Lv();
+            setContentView(root);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        finish();
+        startActivity(intent);
+    }
+
+    public class Lr extends android.content.BroadcastReceiver {
+        @Override
+        public void onReceive(Context c, Intent i) {
+            c.startActivity(new Intent(c, La.class));
         }
     }
 
@@ -70,11 +95,21 @@ import android.view.View;
             setOnLongClickListener(this);
             for (int k = 0; k < apps.length; k++) {
                 Lv v = apps[k];
-                v.mIcon.draw(g);
                 String name = v.mAppName.substring(0, paint.breakText(v.mAppName, true, side, null)), arg = v.mAppName.replace(name, "");
                 Rect rect = v.mIcon.getBounds();
                 int c = rect.left - padding;
                 int d = rect.top - padding;
+                v.mIcon.draw(g);
+                if (k == selected) {
+                    paint.setStyle(Paint.Style.STROKE);
+                    paint.setColor(-65536);
+                    g.drawRect(rect, paint);
+                    launch.setClassName(v.mPackageName, v.mActivityName);
+                } else {
+                    paint.setColor(-1);
+                }
+                paint.setStyle(Paint.Style.FILL);
+                paint.setShadowLayer(10, 1, 5, -16777216);
                 g.drawText(name, (side - paint.measureText(name)) / 2 + c, side + d, paint);
                 g.drawText(arg, (side - paint.measureText(arg)) / 2 + c, side + d + paint.getTextSize(), paint);
             }
@@ -94,7 +129,7 @@ import android.view.View;
                     }
                     break;
                 case MotionEvent.ACTION_UP:
-                    if (sPackage != null) {
+                    if (sPackage != null && !getPackageName().equals(sPackage)) {
                         startActivity(launch);
                     }
                     sPackage = null;
@@ -114,6 +149,41 @@ import android.view.View;
     }
 
     @Override
-    public void onBackPressed() {
+    public boolean onKeyDown(int i, KeyEvent e) {
+        int tmpSelected;
+        switch (i) {
+            case KeyEvent.KEYCODE_ENTER:
+            case KeyEvent.KEYCODE_DPAD_CENTER:
+                startActivity(launch);
+                break;
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                if (selected > 0) {
+                    selected--;
+                }
+                break;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                if (selected < apps.length - 1) {
+                    selected++;
+                }
+                break;
+            case KeyEvent.KEYCODE_DPAD_UP:
+                tmpSelected = selected;
+                tmpSelected -= col;
+                if (tmpSelected > -1) {
+                    selected = tmpSelected;
+                }
+                break;
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                tmpSelected = selected;
+                tmpSelected += col;
+                if (tmpSelected < apps.length) {
+                    selected = tmpSelected;
+                }
+                break;
+            case KeyEvent.KEYCODE_BACK:
+                return true;
+        }
+        root.invalidate();
+        return super.onKeyDown(i, e);
     }
 }

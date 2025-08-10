@@ -1,4 +1,4 @@
--libraryjars "C:\Users\sa\AppData\Local\Android\Sdk\platforms\android-35\android.jar"
+-libraryjars "C:\Users\i\AppData\Local\Android\Sdk\platforms\android-36\android.jar"
 -optimizationpasses 7
 -dontusemixedcaseclassnames
 -overloadaggressively
