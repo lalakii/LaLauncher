@@ -49,8 +49,7 @@ import android.view.View;
             }
             side = x / col;
             padding = side / col;
-            paint.setTextSize(padding);
-            paint.setStrokeWidth(4f);
+            paint.setTextSize(padding * 0.6f);
             for (int k = 0; k < apps.length; k++) {
                 i = (j = k % col) == 0 ? ++i : i;
                 x = j * side;
@@ -69,15 +68,10 @@ import android.view.View;
         }
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        finish();
-        startActivity(intent);
-    }
-
     public class Lr extends android.content.BroadcastReceiver {
         @Override
         public void onReceive(Context c, Intent i) {
+            finish();
             c.startActivity(new Intent(c, La.class));
         }
     }
@@ -99,16 +93,14 @@ import android.view.View;
                 Rect rect = v.mIcon.getBounds();
                 int c = rect.left - padding;
                 int d = rect.top - padding;
-                v.mIcon.draw(g);
                 if (k == selected) {
-                    paint.setStyle(Paint.Style.STROKE);
-                    paint.setColor(-65536);
+                    paint.setColor(-65472);
                     g.drawRect(rect, paint);
                     launch.setClassName(v.mPackageName, v.mActivityName);
                 } else {
                     paint.setColor(-1);
                 }
-                paint.setStyle(Paint.Style.FILL);
+                v.mIcon.draw(g);
                 paint.setShadowLayer(10, 1, 5, -16777216);
                 g.drawText(name, (side - paint.measureText(name)) / 2 + c, side + d, paint);
                 g.drawText(arg, (side - paint.measureText(arg)) / 2 + c, side + d + paint.getTextSize(), paint);
@@ -141,7 +133,7 @@ import android.view.View;
         @Override
         public boolean onLongClick(View __) {
             if (sPackage != null) {
-                startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS, android.net.Uri.fromParts("package", sPackage, null)));
+                startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS, android.net.Uri.parse("package:" + sPackage)));
                 sPackage = null;
             }
             return false;

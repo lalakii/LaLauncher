@@ -4,6 +4,8 @@
 -overloadaggressively
 -repackageclasses "c"
 -adaptresourcefilenames
+-mergeinterfacesaggressively
+-allowaccessmodification
 -dontwarn java.lang.**
 -assumenosideeffects class android.util.Log {
     public static boolean isLoggable(java.lang.String, int);

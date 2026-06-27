@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <queries>
         <intent>
             <action android:name="android.intent.action.MAIN" />
         </intent>
     </queries>
-    <application tools:ignore="MissingApplicationIcon">
+    <application android:icon="@null">
         <activity
             android:name="c.La"
             android:excludeFromRecents="true"
             android:exported="true"
-            android:launchMode="singleTask"
             android:theme="@android:style/Theme.Wallpaper.NoTitleBar.Fullscreen"
-            tools:ignore="IntentFilterExportedReceiver,NewApi">
+            tools:ignore="NewApi">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

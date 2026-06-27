@@ -1,11 +1,12 @@
 plugins {
-    id 'com.android.application' version '8.12.0'
+    //noinspection AndroidGradlePluginVersion
+    id 'com.android.application' version '8.13.2'
     id 'cn.lalaki.repack' version '3.0.3-LTS'
 }
 android {
     namespace = 'android'
-    compileSdk = 36
-    buildToolsVersion = '36.0.0'
+    compileSdkPreview = "CinnamonBun"
+    buildToolsVersion = '37.0.0'
     defaultConfig {
         //noinspection ExpiredTargetSdkVersion
         targetSdk = 29
@@ -24,10 +25,10 @@ android {
             enableV2Signing = false
             enableV3Signing = false
             enableV4Signing = false
-            keyAlias = "1"
-            keyPassword = "1"
-            storePassword = "1"
-            storeFile = file("D:\\lalaki-legacy.jks")
+            keyAlias = "0"
+            keyPassword = "000000"
+            storePassword = "000000"
+            storeFile = file("D:\\lalaki-new-1.jks")
         }
     }
     buildTypes {
@@ -45,6 +46,11 @@ android {
     dependenciesInfo {
         includeInApk = false
         includeInBundle = false
+    }
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = true
+        }
     }
 }
 repackConfig {
