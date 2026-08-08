@@ -1,5 +1,6 @@
 # La Launcher
 [![Android: 1+ (shields.io)](https://img.shields.io/badge/Android-1+-2f9b45?logo=android)](https://www.bilibili.com/video/BV1FW421d7Fi/)
+[![Downloads](https://img.shields.io/github/downloads/lalakii/LaLauncher/total)](https://github.com/lalakii/LaLauncher/releases)
 
 A very small Android launcher.
 
