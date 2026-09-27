@@ -4,7 +4,7 @@ plugins {
     id "checkstyle"
 }
 android {
-    namespace = "c"
+    namespace = "a"
     compileSdk 37
     buildToolsVersion = "37.0.0"
     defaultConfig {
@@ -25,10 +25,10 @@ android {
             enableV2Signing = false
             enableV3Signing = false
             enableV4Signing = false
-            keyAlias = "1"
-            keyPassword = "1"
-            storePassword = "1"
-            storeFile = file("D:\\lalaki-legacy.jks")
+            keyAlias = "0"
+            keyPassword = "111111"
+            storePassword = "111111"
+            storeFile = file("../private/lalaki.jks")
         }
     }
     buildTypes {
@@ -51,11 +51,10 @@ android {
         includeInBundle = false
     }
 }
-
 repackageConfig {
     // *Sign your apk
     autoSign = true
-    storeFile = "C:\\Users\\i\\Desktop\\bak\\lalaki.jks"
+    storeFile = "private/lalaki.jks"
     keyAlias = "0"
     ksPass = "111111"
     keyPass = "111111"
@@ -65,12 +64,11 @@ repackageConfig {
     blackList = List.of("*.version", "kotlin*", "resources.arsc*")
     printOutputApk = true
     disabled = false
+    doAfterTask = "calc"
 }
-
 tasks.withType(JavaCompile).configureEach {
-    options.compilerArgs += ['-g:none']
+    options.compilerArgs += ["-g:none"]
 }
-
 checkstyle {
     configFile = file("config/checkstyle/checkstyle.xml")
     ignoreFailures = false
@@ -78,7 +76,6 @@ checkstyle {
     maxErrors = 0
     maxWarnings = 0
 }
-
 tasks.named("clean").configure {
     it.finalizedBy(tasks.named("check"))
 }

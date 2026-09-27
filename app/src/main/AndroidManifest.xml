@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingApplicationIcon">
 
     <queries>
         <intent>
             <action android:name="android.intent.action.MAIN" />
         </intent>
     </queries>
-    <application tools:ignore="MissingApplicationIcon">
+    <application>
         <activity
             android:name=".a"
             android:excludeFromRecents="true"
             android:exported="true"
-            android:launchMode="singleTask"
-            tools:ignore="NewApi">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
