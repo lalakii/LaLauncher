@@ -1,5 +1,4 @@
 -libraryjars "C:\Users\i\AppData\Local\Android\Sdk\platforms\android-37.2\android.jar"
--optimizationpasses 7
 -dontusemixedcaseclassnames
 -overloadaggressively
 -repackageclasses "a"

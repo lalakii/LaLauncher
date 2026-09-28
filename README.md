@@ -9,9 +9,13 @@
 体积超小的安卓桌面 (Launcher)。
 
 + La.apk => size: 5.08 KB
-+ La2.apk => size: 3.93 KB
++ La2.apk => size: 3.88 KB
 
 [前往哔哩哔哩主页](https://www.bilibili.com/video/BV1pEab6vEiB/)
+
+> Q: 为什么使用源码编译没有我发布的小?
+> 
+> A: 因为有些东西是手动改的，暂时没办法加到构建环节里面。
 
 ## 下载地址
 
@@ -29,11 +33,10 @@
 
 ![Demo - Android 4.4](https://fastly.jsdelivr.net/gh/lalakii/LaLauncher@master/pic/demo3.png)
 
-## 第三方代码
+## 签名工具
 
-`apksigner/` 是我使用的 apk 签名工具的源码，随仓库提供。源码来自 [Android 开源项目](https://github.com/aosp-mirror/platform_build/tree/master/tools/signapk)，许可证信息见 [SignApk.java](https://github.com/aosp-mirror/platform_build/blob/master/tools/signapk/src/com/android/signapk/SignApk.java)。
+[SharpJarSigner](https://github.com/lalakii/SharpJarSigner) 仅(V1)
 
 ## 许可证
 
 本项目采用 [GNU GPL-2.0-only](./LICENSE) 许可证。
-

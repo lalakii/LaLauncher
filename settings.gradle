@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "LaLauncher"
-include ":app", ":apksigner"
+include ":app"

@@ -20,8 +20,6 @@
  */
 package a;
 
-import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -29,32 +27,28 @@ import android.content.IntentFilter;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import java.util.List;
-
 /***
- * Created on 2026-09-27
+ * Created on 2026-09-28
  *
  * @author lalaki i@lalaki.cn
  * @since la launcher
  */
-public class a extends Activity implements View.OnClickListener {
+public class a extends android.app.Activity implements View.OnClickListener {
     Intent t;
 
     @Override
-    public void onCreate(Bundle b) {
+    public void onCreate(android.os.Bundle b) {
         super.onCreate(null);
         if (t == null) {
             IntentFilter f = new IntentFilter(Intent.ACTION_PACKAGE_ADDED);
             f.addAction(Intent.ACTION_PACKAGE_REMOVED);
             f.addDataScheme("package");
-            registerReceiver(new BroadcastReceiver() {
+            registerReceiver(new android.content.BroadcastReceiver() {
                 @Override
                 public void onReceive(Context c, Intent i) {
                     a.this.onCreate(null);
@@ -69,14 +63,14 @@ public class a extends Activity implements View.OnClickListener {
             setTheme(android.R.style.Theme_Wallpaper_NoTitleBar);
         }
         w = getResources().getDisplayMetrics().widthPixels;
-        int wm = w / (w / (int) (new TextView(this).getTextSize() * 6)); // item size
+        int wm = w / ((w / (int) (new TextView(this).getTextSize() * 7)) + 1); // item size +1 避免文字过大导致除以负数
         int ws = wm / 2; // logo size
+        int pd = ws / 4;
         int ww = w / wm;
-        int pd = ws / 5;
         LinearLayout y = new LinearLayout(this);
         LinearLayout l = null;
         y.setOrientation(LinearLayout.VERTICAL);
-        List<ResolveInfo> q = getPackageManager().queryIntentActivities(t, 0);
+        java.util.List<ResolveInfo> q = getPackageManager().queryIntentActivities(t, 0);
         for (w = 0; w < q.size(); w++) {
             if (w % ww == 0) {
                 l = new LinearLayout(this);
@@ -86,11 +80,11 @@ public class a extends Activity implements View.OnClickListener {
             ResolveInfo i = q.get(w);
             TextView v = new TextView(this);
             v.setWidth(wm);
-            v.setGravity(Gravity.CENTER_HORIZONTAL);
+            v.setGravity(android.view.Gravity.CENTER_HORIZONTAL);
             v.setText(i.loadLabel(getPackageManager()));
-            Drawable icon = i.loadIcon(getPackageManager());
-            icon.setBounds(0, 0, ws, ws);
-            v.setCompoundDrawables(null, icon, null, null);
+            Drawable d = i.loadIcon(getPackageManager());
+            d.setBounds(0, 0, ws, ws);
+            v.setCompoundDrawables(null, d, null, null);
             v.setCompoundDrawablePadding(pd);
             v.setTag(new ComponentName(i.activityInfo.packageName, i.activityInfo.name));
             v.setOnClickListener(this);

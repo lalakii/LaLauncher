@@ -9,9 +9,13 @@
 A tiny Android launcher.
 
 - La.apk — 5.08 KB
-- La2.apk — 3.93 KB
+- La2.apk — 3.88 KB
 
 [Visit my Bilibili page](https://www.bilibili.com/video/BV1pEab6vEiB/)
+
+> Q: Why is the source-built version bigger than my release?
+> 
+> A: Some changes are made manually and aren’t part of the build process yet.
 
 ## Downloads
 
@@ -29,9 +33,9 @@ A tiny Android launcher.
 
 ![Demo - Android 4.4](https://fastly.jsdelivr.net/gh/lalakii/LaLauncher@master/pic/demo3.png)
 
-## Third-Party Code
+## Signing tool
 
-The `apksigner/` directory contains source code for the APK signing tool used by this project. It comes from the [Android Open Source Project](https://github.com/aosp-mirror/platform_build/tree/master/tools/signapk). See [`SignApk.java`](https://github.com/aosp-mirror/platform_build/blob/master/tools/signapk/src/com/android/signapk/SignApk.java) for license information.
+[SharpJarSigner](https://github.com/lalakii/SharpJarSigner) (Only V1)
 
 ## License
 
