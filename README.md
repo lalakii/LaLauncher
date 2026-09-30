@@ -1,5 +1,7 @@
 # La 桌面
 
+<img src="https://fastly.jsdelivr.net/gh/lalakii/LaLauncher@master/pic/la_logo_small.png" alt="La 桌面 Logo" width="64" />
+
 [简体中文](./README.md) | [English](./README.en.md)
 
 [![Android: 1+ (shields.io)](https://img.shields.io/badge/Android-1+-2f9b45?logo=android)](https://www.bilibili.com/video/BV1pEab6vEiB/)
