@@ -8,10 +8,10 @@
 
 体积超小的安卓桌面 (Launcher)。
 
++ La2.apk => size: 3.79 KB
 + La.apk => size: 5.08 KB
-+ La2.apk => size: 3.88 KB
 
-[前往哔哩哔哩主页](https://www.bilibili.com/video/BV1pEab6vEiB/)
+[前往我的哔哩哔哩主页](https://www.bilibili.com/video/BV1pEab6vEiB/)
 
 > Q: 为什么使用源码编译没有我发布的小?
 > 
@@ -19,7 +19,7 @@
 
 ## 下载地址
 
-[下载](https://github.com/lalakii/LaLauncher/releases) | [国内加速](https://mirrors.lalaki.cn/La/)
+[下载](https://github.com/lalakii/LaLauncher/releases) | [中国加速](https://mirrors.lalaki.cn/La/)
 
 ## 截图
 

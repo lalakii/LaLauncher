@@ -8,8 +8,8 @@
 
 A tiny Android launcher.
 
+- La2.apk — 3.79 KB
 - La.apk — 5.08 KB
-- La2.apk — 3.88 KB
 
 [Visit my Bilibili page](https://www.bilibili.com/video/BV1pEab6vEiB/)
 
@@ -33,7 +33,7 @@ A tiny Android launcher.
 
 ![Demo - Android 4.4](https://fastly.jsdelivr.net/gh/lalakii/LaLauncher@master/pic/demo3.png)
 
-## Signing tool
+## Signing Tool
 
 [SharpJarSigner](https://github.com/lalakii/SharpJarSigner) (Only V1)
 
